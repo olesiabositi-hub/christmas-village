@@ -25,6 +25,12 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun run build:pages
+      - name: Normalize build output
+        run: |
+          if [ -d .output/public ]; then
+            mkdir -p dist/client
+            cp -a .output/public/. dist/client/
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist/client
